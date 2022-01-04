@@ -1,7 +1,7 @@
 # warm-cafe
 ## Screenshots
 
-![App Screenshot](https://github.com/playatanu/assets/blob/main/cafe.gif)
+![App Screenshot](https://raw.githubusercontent.com/playatanu/warm-cafe/master/warm-cafe-ui.png)
 
 ## Tech Stack
 
