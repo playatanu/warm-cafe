@@ -1,5 +1,5 @@
 # warm-cafe
-## Screenshots
+## Warn Cafe UI Concept
 
 ![App Screenshot](https://raw.githubusercontent.com/playatanu/warm-cafe/master/warm-cafe-ui.png)
 
