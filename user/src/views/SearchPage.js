@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-const SearchPage = () => {
+const SearchPage = ({ navigation }) => {
   return <View></View>;
 };
 

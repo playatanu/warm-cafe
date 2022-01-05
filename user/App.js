@@ -1,21 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
-import HomePage from "./src/views/HomePage";
+import { Provider } from "react-redux";
 
-export default App = () => {
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import HomePage from "./src/views/HomePage";
+import CartPage from "./src/views/CartPage";
+
+import store from "./src/store/store";
+import { NavigationContainer } from "@react-navigation/native";
+
+const Tab = createBottomTabNavigator();
+const App = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <HomePage />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={HomePage} />
+          <Tab.Screen name="Cart" component={CartPage} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F6F6F6",
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-});
+export default App;

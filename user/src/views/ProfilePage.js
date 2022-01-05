@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-const ProfilePage = () => {
+const ProfilePage = ({ navigation }) => {
   return <View></View>;
 };
 
