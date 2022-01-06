@@ -11,9 +11,7 @@ const HomeScreen = ({ navigation }) => {
         numColumns={2}
         data={foodData}
         keyExtractor={foodData.id}
-        renderItem={({ item }) => (
-          <FoodCard foods={item} navigation={navigation} />
-        )}
+        renderItem={({ item }) => <FoodCard foods={item} />}
       />
     </View>
   );

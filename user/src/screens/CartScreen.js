@@ -7,6 +7,10 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 
+import MiniFoodCard from "../components/MiniFoodCard";
+
+import foodData from "../db/foodData";
+
 const CartScreen = ({ navigation }) => {
   const cart = useSelector((state) => state.cartReducer);
 
@@ -18,6 +22,8 @@ const CartScreen = ({ navigation }) => {
           <Text style={styles.btnText}>Proceed to Buy (3 items)</Text>
         </View>
       </TouchableOpacity>
+
+      <MiniFoodCard foods={foodData[1]} />
       {/* <FlatList
       {/* <FlatList
         numColumns={2}
