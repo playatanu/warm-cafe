@@ -12,30 +12,30 @@ const ProfileScreen = ({ navigation }) => {
         />
 
         <View>
-          <Text style={{ fontSize: 15 }}>Atanu Debnath</Text>
-          <Text style={{ fontSize: 15 }}>playatanu@gmail.com</Text>
+          <Text>Atanu Debnath</Text>
+          <Text>playatanu@gmail.com</Text>
         </View>
       </View>
 
-      <View style={{ backgroundColor: "#FFF", padding: 15, marginTop: 15 }}>
-        <Text style={{ fontSize: 13 }}>Phone</Text>
-        <Text style={{ fontSize: 15 }}>6296843271</Text>
+      <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 15 }}>
+        <Text>Phone</Text>
+        <Text>6296843271</Text>
       </View>
 
-      <View style={{ backgroundColor: "#FFF", padding: 15, marginTop: 3 }}>
-        <Text style={{ fontSize: 13 }}>Address</Text>
-        <Text style={{ fontSize: 15 }}>Malanchapara Ambagan</Text>
+      <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 3 }}>
+        <Text>Address</Text>
+        <Text>Malanchapara Ambagan</Text>
       </View>
 
-      <TouchableOpacity>
-        <View style={{ backgroundColor: "#FFF", padding: 15, marginTop: 15 }}>
-          <Text style={{ fontSize: 18 }}>Orders</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Order")}>
+        <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 15 }}>
+          <Text>Orders</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <View style={{ backgroundColor: "#FFF", padding: 15, marginTop: 3 }}>
-          <Text style={{ fontSize: 18 }}>Logout</Text>
+        <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 3 }}>
+          <Text>Logout</Text>
         </View>
       </TouchableOpacity>
     </View>

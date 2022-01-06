@@ -17,7 +17,7 @@ const CartScreen = ({ navigation }) => {
   return (
     <View style={{ padding: 8 }}>
       <Text style={styles.totalText}>Subtotal 421</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Payment")}>
         <View style={styles.proceedBtn}>
           <Text style={styles.btnText}>Proceed to Buy (3 items)</Text>
         </View>
