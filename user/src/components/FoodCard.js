@@ -1,8 +1,14 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+
+// Icons
 import MaterialCommunity from "react-native-vector-icons/MaterialCommunityIcons";
 import Feather from "react-native-vector-icons/Feather";
-import { useDispatch, useSelector } from "react-redux";
+
+// React Redux
+import { useDispatch } from "react-redux";
 import { useState } from "react";
+
+// Action
 import cartAction from "../store/actions/cartAction";
 
 var localcart = [];
@@ -23,41 +29,40 @@ const FoodCard = (props) => {
 
   const addToCart = (f) => {
     SetCartcounter(1);
-    localcart.push({
-      id: f.id,
-      name: f.name,
-      image: f.image,
-      price: f.price,
-      count: 0,
-    });
-    cartIncrement(f.id);
+    // localcart.push({
+    //   id: f.id,
+    //   name: f.name,
+    //   image: f.image,
+    //   price: f.price,
+    //   count: 0,
+    // });
+    // cartIncrement(f.id);
   };
 
   const cartIncrement = (id) => {
     SetCartcounter(cartcounter + 1);
 
-    localcart.filter((val) => {
-      if (val.id == id) {
-        val.count++;
-      }
-    });
-
-    dis(cartAction(localcart));
+    // localcart.filter((val) => {
+    //   if (val.id == id) {
+    //     val.count++;
+    //     dis(cartAction(localcart));
+    //   }
+    // });
   };
 
   const cartDecrement = (id) => {
     SetCartcounter(cartcounter - 1);
-    if (cartcounter != 1) {
-      localcart.filter((val) => {
-        if (val.id == id) {
-          val.count--;
-        }
-      });
-    } else {
-      var i = revoveItem(id);
-      localcart = i;
-    }
-    dis(cartAction(localcart));
+
+    // if (cartcounter != 1) {
+    //   localcart.filter((val) => {
+    //     if (val.id == id) {
+    //       val.count--;
+    //       dis(cartAction(localcart));
+    //     }
+    //   });
+    // } else {
+    //   dis(cartAction(revoveItem(id)));
+    // }
   };
 
   return (
