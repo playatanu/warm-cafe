@@ -73,13 +73,13 @@ const App = () => {
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
 
-              if (route.name === "Home") {
+              if (route.name === "HomeNav") {
                 iconName = focused ? "home" : "home";
-              } else if (route.name === "Search") {
+              } else if (route.name === "SearchNav") {
                 iconName = focused ? "search1" : "search1";
-              } else if (route.name === "Cart") {
+              } else if (route.name === "CartNav") {
                 iconName = focused ? "shoppingcart" : "shoppingcart";
-              } else if (route.name === "Profile") {
+              } else if (route.name === "ProfileNav") {
                 iconName = focused ? "user" : "user";
               }
               return <Icon name={iconName} size={size} color={color} />;
@@ -88,17 +88,17 @@ const App = () => {
             tabBarInactiveTintColor: "gray",
           })}
         >
-          <Tab.Screen name="Home" component={HomeNav} />
-          <Tab.Screen name="Search" component={SearchNav} />
+          <Tab.Screen name="HomeNav" component={HomeNav} />
+          <Tab.Screen name="SearchNav" component={SearchNav} />
           <Tab.Screen
-            name="Cart"
+            name="CartNav"
             component={CartNav}
             options={{
               tabBarBadge: true ? 3 : false,
               tabBarBadgeStyle: { backgroundColor: "#FF971D", color: "#FFF" },
             }}
           />
-          <Tab.Screen name="Profile" component={ProfileNav} />
+          <Tab.Screen name="ProfileNav" component={ProfileNav} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

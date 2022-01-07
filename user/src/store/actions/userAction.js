@@ -5,4 +5,13 @@ const userAction = (value) => {
   };
 };
 
+const userActionNAP = (value) => {
+  return {
+    type: "updateUserNAP",
+    payload: value,
+  };
+};
+
 export default userAction;
+
+export { userActionNAP };

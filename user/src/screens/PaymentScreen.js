@@ -1,6 +1,65 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+
+import { useSelector, useDispatch } from "react-redux";
+import ActionSheet from "react-native-actionsheet";
+import { useRef, useState } from "react";
+import { userActionNAP } from "../store/actions/userAction";
 
 const PaymentScreen = ({ navigation }) => {
+  // user State
+  const dis = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const [user, SetUser] = useState({
+    name: userState.name,
+    address: userState.address,
+    phone: userState.phone,
+  });
+
+  //buttom sheets function
+  const actionSheet = useRef();
+  showActionSheet = () => {
+    actionSheet.current.show();
+  };
+
+  //buttom sheet UI
+  const sheetOption = [
+    <View style={{ flex: 1, width: "90%" }}>
+      <TextInput
+        style={{ padding: 10 }}
+        defaultValue={userState.name}
+        placeholder="Your Name"
+        onChangeText={(e) => SetUser({ ...user, name: e })}
+      />
+    </View>,
+
+    <View style={{ flex: 1, width: "90%" }}>
+      <TextInput
+        style={{ padding: 10 }}
+        defaultValue={userState.address}
+        placeholder="Your Address"
+        onChangeText={(e) => SetUser({ ...user, address: e })}
+      />
+    </View>,
+
+    <View style={{ flex: 1, width: "90%" }}>
+      <TextInput
+        style={{ padding: 10 }}
+        defaultValue={userState.phone}
+        placeholder="Your Phone Number"
+        onChangeText={(e) => SetUser({ ...user, phone: e })}
+      />
+    </View>,
+
+    "SAVE",
+    "cencel",
+  ];
+
   return (
     <>
       <View style={{ padding: 8 }}>
@@ -33,11 +92,14 @@ const PaymentScreen = ({ navigation }) => {
         >
           Deliver to
         </Text>
-        <View style={styles.address}>
-          <Text>Atanu Debnath</Text>
-          <Text>Malanchapara Ambagan</Text>
-          <Text>6296843271</Text>
-        </View>
+
+        <TouchableOpacity onPress={showActionSheet}>
+          <View style={styles.address}>
+            <Text>{userState.name}</Text>
+            <Text>{userState.address}</Text>
+            <Text>{userState.phone}</Text>
+          </View>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate("Order")}>
           <View style={styles.proceedBtn}>
@@ -45,6 +107,19 @@ const PaymentScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
+
+      <ActionSheet
+        ref={actionSheet}
+        //title={"Which one do you like?"}
+        options={sheetOption}
+        cancelButtonIndex={4}
+        destructiveButtonIndex={0}
+        onPress={(index) => {
+          if (index == 3) {
+            dis(userActionNAP(user));
+          }
+        }}
+      />
     </>
   );
 };

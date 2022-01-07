@@ -1,30 +1,92 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+
+import { useSelector, useDispatch } from "react-redux";
+import ActionSheet from "react-native-actionsheet";
+import { useRef, useState } from "react";
+import { userActionNAP } from "../store/actions/userAction";
 
 const ProfileScreen = ({ navigation }) => {
+  // user State
+  const dis = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const [user, SetUser] = useState({
+    name: userState.name,
+    address: userState.address,
+    phone: userState.phone,
+  });
+
+  //buttom sheets function
+  const actionSheet = useRef();
+  showActionSheet = () => {
+    actionSheet.current.show();
+  };
+
+  //buttom sheet UI
+  const sheetOption = [
+    <View style={{ flex: 1, width: "90%" }}>
+      <TextInput
+        style={{ padding: 10 }}
+        defaultValue={userState.name}
+        placeholder="Your Name"
+        onChangeText={(e) => SetUser({ ...user, name: e })}
+      />
+    </View>,
+
+    <View style={{ flex: 1, width: "90%" }}>
+      <TextInput
+        style={{ padding: 10 }}
+        defaultValue={userState.address}
+        placeholder="Your Address"
+        onChangeText={(e) => SetUser({ ...user, address: e })}
+      />
+    </View>,
+
+    <View style={{ flex: 1, width: "90%" }}>
+      <TextInput
+        style={{ padding: 10 }}
+        defaultValue={userState.phone}
+        placeholder="Your Phone Number"
+        onChangeText={(e) => SetUser({ ...user, phone: e })}
+      />
+    </View>,
+
+    "SAVE",
+    "cencel",
+  ];
+
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.profile}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-          }}
-        />
+      <TouchableOpacity onPress={showActionSheet}>
+        <View style={styles.profile}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: userState.image,
+            }}
+          />
 
-        <View>
-          <Text>Atanu Debnath</Text>
-          <Text>playatanu@gmail.com</Text>
+          <View>
+            <Text>{userState.name}</Text>
+            <Text>{userState.email}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
       <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 15 }}>
         <Text>Phone</Text>
-        <Text>6296843271</Text>
+        <Text>{userState.phone}</Text>
       </View>
 
       <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 3 }}>
         <Text>Address</Text>
-        <Text>Malanchapara Ambagan</Text>
+        <Text>{userState.address}</Text>
       </View>
 
       <TouchableOpacity onPress={() => navigation.navigate("Order")}>
@@ -33,11 +95,24 @@ const ProfileScreen = ({ navigation }) => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => console.warn("logout")}>
         <View style={{ backgroundColor: "#FFF", padding: 18, marginTop: 3 }}>
           <Text>Logout</Text>
         </View>
       </TouchableOpacity>
+
+      <ActionSheet
+        ref={actionSheet}
+        //title={"Which one do you like?"}
+        options={sheetOption}
+        cancelButtonIndex={4}
+        destructiveButtonIndex={0}
+        onPress={(index) => {
+          if (index == 3) {
+            dis(userActionNAP(user));
+          }
+        }}
+      />
     </View>
   );
 };
