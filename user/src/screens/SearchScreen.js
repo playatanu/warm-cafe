@@ -1,4 +1,11 @@
-import { View, TextInput, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  TextInput,
+  Switch,
+  StyleSheet,
+  FlatList,
+  Text,
+} from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import { useState } from "react";
@@ -8,32 +15,23 @@ import foodData from "../db/foodData";
 import FoodCard from "../components/FoodCard";
 
 const SearchScreen = ({ navigation }) => {
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [vegFilter, setVegFilter] = useState(false);
 
   const updateFood = (e) => {
     console.log(e);
-    setSearchResult([
-      {
-        id: 7,
-        name: "Special Cha",
-        image:
-          "https://images.unsplash.com/photo-1608651057580-4a50b2fc2281?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fG1pbGslMjB0ZWF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        price: "10",
-        veg: "true",
-      },
-      {
-        id: 7,
-        name: "Special Cha",
-        image:
-          "https://images.unsplash.com/photo-1608651057580-4a50b2fc2281?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fG1pbGslMjB0ZWF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-        price: "10",
-        veg: "true",
-      },
-    ]);
+    setSearchText(e);
   };
+
+  const toggleFunc = (e) => {
+    setVegFilter(e);
+  };
+
   return (
     <>
-      <View style={{ flex: 1, alignItems: "center" }}>
+      <View style={{ alignItems: "center" }}>
+        {/* Search Bar */}
+
         <View style={styles.searchbox}>
           <TextInput
             placeholder="Find your fab Foods.."
@@ -47,10 +45,50 @@ const SearchScreen = ({ navigation }) => {
           <Icon name="search1" size={25} />
         </View>
 
-        <View>
+        {/* Veg Only Switch */}
+
+        <View
+          style={{
+            flexDirection: "row",
+            width: "90%",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Text>Veg Only</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#767577" }}
+            thumbColor={vegFilter ? "#FF971D" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            value={vegFilter}
+            onValueChange={toggleFunc}
+          />
+        </View>
+
+        {/* Flatlist Food Item */}
+        <View style={{}}>
           <FlatList
             numColumns={2}
-            data={searchResult}
+            data={foodData
+              .filter((val) => {
+                if (searchText == "") {
+                  console.log(val.name);
+                  return null;
+                } else if (
+                  val.name.toLowerCase().includes(searchText.toLowerCase())
+                ) {
+                  return val;
+                }
+              })
+              .filter((val) => {
+                if (vegFilter) {
+                  if (val.veg == vegFilter.toString()) {
+                    return val;
+                  }
+                } else {
+                  return val;
+                }
+              })}
             renderItem={({ item }) => <FoodCard foods={item} />}
           />
         </View>

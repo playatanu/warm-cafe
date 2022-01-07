@@ -30,35 +30,34 @@ const ProfileScreen = ({ navigation }) => {
 
   //buttom sheet UI
   const sheetOption = [
-    <View style={{ flex: 1, width: "90%" }}>
+    <View style={{ width: "90%" }}>
       <TextInput
-        style={{ padding: 10 }}
+        style={{}}
         defaultValue={userState.name}
         placeholder="Your Name"
         onChangeText={(e) => SetUser({ ...user, name: e })}
       />
     </View>,
 
-    <View style={{ flex: 1, width: "90%" }}>
+    <View style={{ width: "90%" }}>
       <TextInput
-        style={{ padding: 10 }}
+        style={{}}
         defaultValue={userState.address}
         placeholder="Your Address"
         onChangeText={(e) => SetUser({ ...user, address: e })}
       />
     </View>,
 
-    <View style={{ flex: 1, width: "90%" }}>
+    <View style={{ width: "90%" }}>
       <TextInput
-        style={{ padding: 10 }}
+        style={{}}
         defaultValue={userState.phone}
         placeholder="Your Phone Number"
         onChangeText={(e) => SetUser({ ...user, phone: e })}
       />
     </View>,
 
-    "SAVE",
-    "cencel",
+    "Save",
   ];
 
   return (
@@ -105,8 +104,9 @@ const ProfileScreen = ({ navigation }) => {
         ref={actionSheet}
         //title={"Which one do you like?"}
         options={sheetOption}
-        cancelButtonIndex={4}
-        destructiveButtonIndex={0}
+        //cancelButtonIndex={4}
+        tintColor={"#FF971D"}
+        // destructiveButtonIndex={0}
         onPress={(index) => {
           if (index == 3) {
             dis(userActionNAP(user));

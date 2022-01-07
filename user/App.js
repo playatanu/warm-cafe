@@ -6,21 +6,23 @@ import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-//pages
+
+//screens
 import HomeScreen from "./src/screens/HomeScreen";
 import CartScreen from "./src/screens/CartScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import SearchScreen from "./src/screens/SearchScreen";
 import PaymentScreen from "./src/screens/PaymentScreen";
 import OrderScreen from "./src/screens/OrderScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+
+//custom screen
+import HeaderHome from "./src/custom/HaderHome";
 
 //icons
 import Icon from "react-native-vector-icons/AntDesign";
 
-import HeaderHome from "./src/custom/HaderHome";
-
-import React from "react";
-
+//Navigator
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -57,7 +59,10 @@ const CartNav = () => {
 const ProfileNav = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={true ? ProfileScreen : LoginScreen}
+      />
       <Stack.Screen name="Order" component={OrderScreen} />
     </Stack.Navigator>
   );
