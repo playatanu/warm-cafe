@@ -1,43 +1,29 @@
-import {
-  View,
-  FlatList,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import { useSelector } from "react-redux";
+import {View, FlatList, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {useSelector} from 'react-redux';
+import React from 'react';
+import MiniFoodCard from '../components/MiniFoodCard';
 
-import MiniFoodCard from "../components/MiniFoodCard";
-
-import foodData from "../db/foodData";
-
-const CartScreen = ({ navigation }) => {
-  const cart = useSelector((state) => state.cartReducer);
+const CartScreen = ({navigation}) => {
+  const cart = useSelector(state => state.cartReducer);
 
   return (
-    <View style={{ padding: 8 }}>
-      <Text style={styles.totalText}>Subtotal 421</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Payment")}>
+    <View style={{padding: 8}}>
+      <FlatList
+        numColumns={1}
+        data={cart.items}
+        extraData={cart.items}
+        //keyExtractor={cart.item}
+        progressViewOffset={100}
+        renderItem={({item}) => <MiniFoodCard foods={item} />}
+      />
+      <Text style={styles.totalText}>Subtotal ₹{cart.totalAmount}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Payment')}>
         <View style={styles.proceedBtn}>
-          <Text style={styles.btnText}>Proceed to Buy (3 items)</Text>
+          <Text style={styles.btnText}>
+            Proceed to Buy ({cart.cartCounter} items)
+          </Text>
         </View>
       </TouchableOpacity>
-
-      <MiniFoodCard foods={foodData[1]} />
-      {/* <FlatList
-      {/* <FlatList
-        numColumns={2}
-        data={cart}
-        extraData={cart}
-        keyExtractor={cart.id}
-        progressViewOffset={100}
-        ListEmptyComponent={<Text>"No data found." </Text>}
-        renderItem={({ item }) => (
-          <Text>
-            {item.name} {item.count}
-          </Text>
-        )}
-      /> */}
     </View>
   );
 };
@@ -48,15 +34,15 @@ const styles = StyleSheet.create({
   },
   proceedBtn: {
     margin: 8,
-    backgroundColor: "#FF971D",
+    backgroundColor: '#FF971D',
     padding: 8,
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
   },
 
   btnText: {
-    color: "#FFF",
-    fontWeight: "bold",
+    color: '#FFF',
+    fontWeight: 'bold',
   },
 });
 

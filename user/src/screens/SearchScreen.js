@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
@@ -5,73 +6,73 @@ import {
   StyleSheet,
   FlatList,
   Text,
-} from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+  ScrollView,
+} from 'react-native';
 
-import { useState } from "react";
+import Icon from 'react-native-vector-icons/AntDesign';
 
-import foodData from "../db/foodData";
+import foodData from '../db/foodData';
 
-import FoodCard from "../components/FoodCard";
+import FoodCard from '../components/FoodCard';
 
-const SearchScreen = ({ navigation }) => {
-  const [searchText, setSearchText] = useState("");
+const SearchScreen = ({navigation}) => {
+  const [searchText, setSearchText] = useState('');
   const [vegFilter, setVegFilter] = useState(false);
 
-  const updateFood = (e) => {
+  const updateFood = e => {
     console.log(e);
     setSearchText(e);
   };
 
-  const toggleFunc = (e) => {
+  const toggleFunc = e => {
     setVegFilter(e);
   };
 
   return (
     <>
-      <View style={{ alignItems: "center" }}>
-        {/* Search Bar */}
+      <ScrollView>
+        <View style={{alignItems: 'center', marginBottom: 50}}>
+          {/* Search Bar */}
 
-        <View style={styles.searchbox}>
-          <TextInput
-            placeholder="Find your fab Foods.."
+          <View style={styles.searchbox}>
+            <TextInput
+              placeholder="Find your fab Foods.."
+              style={{
+                flex: 0,
+                flexDirection: 'row',
+                width: '85%',
+              }}
+              onChangeText={e => updateFood(e)}
+            />
+            <Icon name="search1" size={25} />
+          </View>
+
+          {/* Veg Only Switch */}
+
+          <View
             style={{
-              flex: 0,
-              flexDirection: "row",
-              width: "85%",
-            }}
-            onChangeText={(e) => updateFood(e)}
-          />
-          <Icon name="search1" size={25} />
-        </View>
+              flexDirection: 'row',
+              width: '90%',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              marginTop: 10,
+            }}>
+            <Text>Veg Only</Text>
+            <Switch
+              trackColor={{false: '#767577', true: '#767577'}}
+              thumbColor={vegFilter ? '#FF971D' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              value={vegFilter}
+              onValueChange={toggleFunc}
+            />
+          </View>
 
-        {/* Veg Only Switch */}
-
-        <View
-          style={{
-            flexDirection: "row",
-            width: "90%",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Text>Veg Only</Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#767577" }}
-            thumbColor={vegFilter ? "#FF971D" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            value={vegFilter}
-            onValueChange={toggleFunc}
-          />
-        </View>
-
-        {/* Flatlist Food Item */}
-        <View style={{}}>
+          {/* Flatlist Food Item */}
           <FlatList
             numColumns={2}
             data={foodData
-              .filter((val) => {
-                if (searchText == "") {
+              .filter(val => {
+                if (searchText == '') {
                   console.log(val.name);
                   return null;
                 } else if (
@@ -80,7 +81,7 @@ const SearchScreen = ({ navigation }) => {
                   return val;
                 }
               })
-              .filter((val) => {
+              .filter(val => {
                 if (vegFilter) {
                   if (val.veg == vegFilter.toString()) {
                     return val;
@@ -89,24 +90,24 @@ const SearchScreen = ({ navigation }) => {
                   return val;
                 }
               })}
-            renderItem={({ item }) => <FoodCard foods={item} />}
+            renderItem={({item}) => <FoodCard foods={item} />}
           />
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   searchbox: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginHorizontal: 0,
     marginVertical: 15,
     paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     borderRadius: 100,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 export default SearchScreen;

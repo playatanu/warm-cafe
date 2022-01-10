@@ -1,18 +1,18 @@
 const userReducer = (
   state = {
-    name: "Atanu Debnath",
-    email: "playatanu@gmail.com",
+    name: 'Atanu Debnath',
+    email: 'playatanu@gmail.com',
     image:
-      "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    phone: "6296843271",
-    address: "Malanchapara Ambagan",
+      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+    phone: '6296843271',
+    address: 'Malanchapara Ambagan',
   },
-  action
+  action,
 ) => {
   switch (action.type) {
-    case "updateUserState":
+    case 'updateUserState':
       return action.payload;
-    case "updateUserNAP":
+    case 'updateUserNAP':
       var newState = {
         name: action.payload.name,
         email: state.email,

@@ -1,8 +1,31 @@
-const cartAction = (value) => {
+const addFoodItems = food => {
   return {
-    type: "updateCart",
-    payload: value,
+    type: 'addFoodItems',
+    payload: food,
   };
 };
 
-export default cartAction;
+const removeFoodItem = id => {
+  return {
+    type: 'removeFoodItem',
+    payload: id,
+  };
+};
+
+const incrementCount = id => {
+  console.log('inc' + id);
+  return {
+    type: 'incrementCount',
+    payload: id,
+  };
+};
+
+const decrementCount = id => {
+  console.log('dec' + id);
+  return {
+    type: 'decrementCount',
+    payload: id,
+  };
+};
+
+export {removeFoodItem, addFoodItems, incrementCount, decrementCount};

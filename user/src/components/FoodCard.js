@@ -1,68 +1,47 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 
 // Icons
-import MaterialCommunity from "react-native-vector-icons/MaterialCommunityIcons";
-import Feather from "react-native-vector-icons/Feather";
+import Icon from 'react-native-vector-icons/Feather';
+import IconME from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {
+  removeFoodItem,
+  addFoodItems,
+  incrementCount,
+  decrementCount,
+} from '../store/actions/cartAction';
 
-// React Redux
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-
-// Action
-import cartAction from "../store/actions/cartAction";
-
-var localcart = [];
-
-const revoveItem = (item) => {
-  let newArray = [...localcart];
-  const index = newArray.findIndex((element) => element.id === item);
-  if (index !== -1) {
-    newArray.splice(index, 1);
-    return newArray;
-  }
-};
-
-const FoodCard = (props) => {
-  var food = props.foods;
+const FoodCard = props => {
   const dis = useDispatch();
-  const [cartcounter, SetCartcounter] = useState(0);
+  const addToCart = food => {
+    dis(
+      addFoodItems({
+        id: food.id,
+        name: food.name,
+        price: food.price,
+        image: food.image,
+        veg: food.veg,
+        count: 1,
+      }),
+    );
 
-  const addToCart = (f) => {
-    SetCartcounter(1);
-    // localcart.push({
-    //   id: f.id,
-    //   name: f.name,
-    //   image: f.image,
-    //   price: f.price,
-    //   count: 0,
-    // });
-    // cartIncrement(f.id);
-  };
+    const message = food.name + ' Added to your Cart';
 
-  const cartIncrement = (id) => {
-    SetCartcounter(cartcounter + 1);
-
-    // localcart.filter((val) => {
-    //   if (val.id == id) {
-    //     val.count++;
-    //     dis(cartAction(localcart));
-    //   }
-    // });
-  };
-
-  const cartDecrement = (id) => {
-    SetCartcounter(cartcounter - 1);
-
-    // if (cartcounter != 1) {
-    //   localcart.filter((val) => {
-    //     if (val.id == id) {
-    //       val.count--;
-    //       dis(cartAction(localcart));
-    //     }
-    //   });
-    // } else {
-    //   dis(cartAction(revoveItem(id)));
-    // }
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.SHORT,
+      ToastAndroid.BOTTOM,
+      0,
+      200,
+    );
   };
 
   return (
@@ -70,46 +49,30 @@ const FoodCard = (props) => {
       <Image
         style={styles.image}
         source={{
-          uri: food.image,
+          uri: props.foods.image,
         }}
       />
       <View style={styles.namebar}>
-        <MaterialCommunity
+        <IconME
           name="radiobox-marked"
-          color={food.veg == "true" ? "#0E9C0B" : "#FF000F"}
+          color={props.foods.veg === 'true' ? '#0E9C0B' : '#FF000F'}
         />
 
-        <Text style={styles.foodname}>{food.name}</Text>
+        <Text style={styles.foodname}>{props.foods.name}</Text>
       </View>
 
       <View style={styles.butom}>
-        <Text style={styles.foodprice}>₹ {food.price}</Text>
-
-        {cartcounter != 0 ? (
+        <Text style={styles.foodprice}>₹ {props.foods.price}</Text>
+        <TouchableOpacity
+          onPressIn={() => {
+            addToCart(props.foods);
+          }}>
           <View style={styles.cart}>
-            <TouchableOpacity
-              onPressIn={() => {
-                cartDecrement(food.id);
-              }}
-            >
-              <Feather color={"#FFF"} name="minus" size={18} />
-            </TouchableOpacity>
-            <Text style={{ color: "#FFF", fontWeight: "bold" }}>
-              {cartcounter}
-            </Text>
-            <TouchableOpacity onPressIn={() => cartIncrement(food.id)}>
-              <Feather color={"#FFF"} name="plus" size={18} />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <TouchableOpacity onPressIn={() => addToCart(food)}>
-            <View style={styles.cart}>
-              <Feather name="shopping-cart" color={"#FFF"} />
+            <Icon name="shopping-cart" color={'#FFF'} />
 
-              <Text style={{ color: "#fff", fontWeight: "bold" }}>ADD</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+            <Text style={{color: '#fff', fontWeight: 'bold'}}>ADD</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -119,7 +82,7 @@ const styles = StyleSheet.create({
   box: {
     width: 170,
     height: 170,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 10,
     // padding: 8,
     margin: 8,
@@ -131,36 +94,36 @@ const styles = StyleSheet.create({
   },
   namebar: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: 8,
-    alignItems: "center",
+    alignItems: 'center',
   },
   butom: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   cart: {
     flex: 1,
     width: 90,
-    flexDirection: "row",
-    backgroundColor: "#FF971D",
+    flexDirection: 'row',
+    backgroundColor: '#FF971D',
     borderTopLeftRadius: 10,
     borderBottomRightRadius: 10,
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   counter: {
-    color: "#fff",
+    color: '#fff',
   },
   foodname: {
     marginLeft: 3,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 15,
   },
   foodprice: {
     width: 80,
-    textAlign: "center",
-    fontWeight: "bold",
+    textAlign: 'center',
+    fontWeight: 'bold',
     fontSize: 18,
   },
 });
